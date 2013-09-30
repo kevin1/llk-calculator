@@ -1,3 +1,10 @@
+/*
+ Group LLK
+ Liam Sarwas - lms2260
+ Levi Oliver - lpo2105
+ Kevin Chen - kxc2103
+ */
+
 #include "AT91SAM7L128.h"
 
 #define KEYBOARD_COLUMNS 0x7f
