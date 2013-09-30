@@ -1,6 +1,14 @@
 #ifndef _KEYBOARD_H
 #  define KEYBOARD_H
 
+/*
+ Group LLK
+	Liam Sarwas - lms2260
+	Levi Oliver - lpo2105
+	Kevin Chen - kxc2103
+
+ */
+
 /* Keyboard Layout
 
    Rows and columns on HP 20b schematic are reversed from what you'd expect
@@ -33,7 +41,7 @@ extern void keyboard_column_low(int column);
 // Return true if the row is high, false otherwise
 extern int keyboard_row_read(int row);
 
-// Returns an int equal to 10*(row being pressed + 1) + (column be pressed + 1) or -1 if nothing is being pressed
+// Returns an int equal to 10*(row being pressed + 1) + (column be pressed + 1) or -1 if nothing is being pressed. This is our own keyboard matrix.
 int keyboard_get_key();
 
 
