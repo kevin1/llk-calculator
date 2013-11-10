@@ -79,7 +79,8 @@ int main(){
 				break;
 				
 			// Division
-			// Our toolchain doesn't let us divide by a variable, so this code is nastycase '/':
+			// Our toolchain doesn't let us divide by a variable, so this code is nasty
+			case '/':
 				// If Kevin tries to divide by zero
 				if (b == 0){
 					taunt_user();
