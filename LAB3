@@ -1,0 +1,86 @@
+int main(){
+  struct entry entry;
+  // Disable the watchdog timer
+  *AT91C_WDTC_WDMR = AT91C_WDTC_WDDIS;
+
+  lcd_init();
+  keyboard_init();
+
+  lcd_print7("PRESS");
+
+  keyboard_get_entry(&entry);
+  lcd_put_char7(entry.operation, 0);
+
+  return 0;
+}
+
+int keyboard_current_key()
+{
+  int row, col;
+  for (col = 0 ; col < NUM_COLUMNS ; col++)
+  {
+    keyboard_column_low(col);
+    for (row = 0 ; row < NUM_ROWS ; row++)
+      if (!keyboard_row_read(row)){
+        keyboard_column_high(col);
+
+		  	return keyboard_keys[col][row];
+
+      }
+    keyboard_column_high(col);
+  }
+  return -1;
+}
+
+void keyboard_get_entry(struct entry *result)
+{
+	int sign = 1;
+	int has_number = 0;
+	result->number = 0;
+	
+	while(1)
+	{
+		int key_pressed = keyboard_get_key();	
+		if(key_pressed <= '9' && key_pressed >= '0' && (result->number <= INT_MAX/10 - 1))
+		{
+  		  result->number *= 10;
+  		  result->number += key_pressed - '0';
+  		  has_number = 1;
+  		}
+  		if(key_pressed == '~')
+  		{
+  			sign *= -1;
+  		}
+  		if(key_pressed == '\b')
+  		{
+  			result->number /= 10;
+  		}
+  		if(key_pressed == '*' || key_pressed == '/' || key_pressed == '+' || key_pressed == '-' || key_pressed == '\r')
+  		{
+  		  	if(!has_number)
+  			{
+  				result->number = INT_MAX;
+  			}
+  			result->number *= sign;
+  			result->operation = key_pressed;
+  			return;
+  		}
+  		lcd_print_int(sign*result->number);
+	}
+}
+
+int keyboard_get_key()
+{
+	int current_key = keyboard_current_key();
+	
+	if(old_key == current_key)
+	{
+		return -1;
+	}
+	else
+	{
+		old_key = current_key;
+		return current_key;
+	}
+}
+
