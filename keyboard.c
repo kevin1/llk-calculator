@@ -2,15 +2,15 @@
 
 int keyboard_get_key()
 {
-	for (int col = 0; col < 7; col++)
+	for (int col = 0; col < NUM_COLUMNS; col++)
 	{
 		keyboard_column_low(col);
 		
-		// TODO: do we need to use actual row numbers?
-		for (int row = 0; row < 7; row++)
+		for (int row = 0; row < NUM_ROWS; row++)
 		{
 			if (keyboard_row_read(row) == 0)
 			{
+				keyboard_column_high(col);
 				return row*10 + col;
 			}
 		}
