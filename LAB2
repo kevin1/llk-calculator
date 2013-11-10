@@ -1,0 +1,20 @@
+
+
+int keyboard_get_key(){
+	int col;
+	for (col = 0; col < 7; col++){
+		keyboard_column_low(col);
+		
+		int row;
+		for (row = 0; row < 6; row++){
+			if (!keyboard_row_read(row)){
+				keyboard_column_high(col);
+				return ((row+1)*10 + (col+1));
+			}
+		}
+		
+		keyboard_column_high(col);
+	}
+	
+	return -1;
+}
