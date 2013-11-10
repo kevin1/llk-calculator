@@ -62,10 +62,7 @@ int keyboard_current_key()
       if (!keyboard_row_read(row))
       {
 		keyboard_column_high(col);
-		//if(key_has_been_pressed == 0)
-		//{
-			return keyboard_keys[col][row];
-		//}
+		return keyboard_keys[col][row];
       }
     keyboard_column_high(col);
   }
